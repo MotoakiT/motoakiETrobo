@@ -12,6 +12,7 @@ MotorIo::~MotorIo() {
 }
 
 void MotorIo::Update() {
+      //エンコーダー
   counts_l_ = ev3_motor_get_counts(EV3_PORT_C);
   counts_r_ = ev3_motor_get_counts(EV3_PORT_B);
   power_l_ = static_cast<int8_t>(ev3_motor_get_power(EV3_PORT_C));
