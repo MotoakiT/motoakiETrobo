@@ -46,7 +46,7 @@ void BasicDriver::Run() {
 
   if (move_type_ == kGoForward) {
     power_l = power_r = base_power_;
-    cin << counts_r_ << counts_r_ << cout;
+    printf("%d , %d",power_l , power_r);
 
   } else if (move_type_ == kGoBackward) {
     power_l = power_r = -base_power_;
