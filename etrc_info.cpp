@@ -1,7 +1,5 @@
 #include "etrc_info.h"
-
 #include <math.h>
-
 #include "app.h"
 
 Luminous::Luminous(SensorIo* sensor_io, Camera* camera)
