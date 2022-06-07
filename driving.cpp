@@ -1,4 +1,6 @@
 #include "driving.h"
+#include "etrc_info.h"
+#include <math.h>
 
 WheelsControl::WheelsControl(MotorIo* motor_io) : motor_io_(motor_io) {
 }
