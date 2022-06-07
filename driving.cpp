@@ -39,11 +39,15 @@ void BasicDriver::SetParam(Move move_type, int8_t base_power) {
 }
 
 void BasicDriver::Run() {
+  int32_t counts_r_ = motor_io_->counts_r_;
+  int32_t counts_l_ = motor_io_->counts_l_;
   int8_t power_l;
   int8_t power_r;
 
   if (move_type_ == kGoForward) {
     power_l = power_r = base_power_;
+    printf(counts_l_,counts_r_);
+
   } else if (move_type_ == kGoBackward) {
     power_l = power_r = -base_power_;
   } else if (move_type_ == kRotateLeft) {
