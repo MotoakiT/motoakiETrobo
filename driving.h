@@ -4,7 +4,6 @@
 #include "info_type.h"
 #include "etrc_info.h"
 #include "utils.h"
-#include "device_io.h"
 
 class WheelsControl {
  public:
@@ -42,7 +41,7 @@ class LineTracer {
   Luminous* luminous_;
   Move move_type_;
   int8_t base_power_;
-  const int8_t line_trace_threshold = 40;
+  const int8_t line_trace_threshold = 50;
   PidControl* pid_control_;
 };
 
