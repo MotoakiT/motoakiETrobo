@@ -4,6 +4,8 @@
 #include "info_type.h"
 #include "etrc_info.h"
 #include "utils.h"
+#include "ev3api.h"
+#include "device_io.h"
 
 class WheelsControl {
  public:
@@ -26,6 +28,9 @@ class BasicDriver {
   WheelsControl* wheels_control_;
   Move move_type_;
   int8_t base_power_;
+  MotorIo* motor_io_;
+  int32_t counts_rs[100000] = {};
+  int32_t counts_ls[100000] = {};
 };
 
 class LineTracer {
