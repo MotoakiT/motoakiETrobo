@@ -6,12 +6,6 @@
 
 Luminous::Luminous(SensorIo* sensor_io, Camera* camera)
     : color_(kInvalidColor), hsv_({0, 0, 0}), sensor_io_(sensor_io), camera_(camera) {
-  SetColorReference(kGreen, (Hsv){120, 0, 0});
-  SetColorReference(kBlack, (Hsv){240, 30, 60});
-  SetColorReference(kRed, (Hsv){0, 0, 0});
-  SetColorReference(kYellow, (Hsv){50, 0, 0});
-  SetColorReference(kBlue, (Hsv){220, 90, 100});
-  SetColorReference(kInvalidColor, (Hsv){0, 0, 0});
 }
 
 void Luminous::Update() {
@@ -78,37 +72,6 @@ void Luminous::UpdateHsv() {
 }
 
 void Luminous::UpdateColor() {
-  // float sat_white = color_ref_[kWhite].s;
-  float hue_black = color_ref_[kBlack].h;
-  float sat_black = color_ref_[kBlack].s;
-  float val_black = color_ref_[kBlack].v;
-  float hue_green = color_ref_[kGreen].h;
-  float hue_red = color_ref_[kRed].h;
-  float hue_blue = color_ref_[kBlue].h;
-  float sat_blue = color_ref_[kBlue].s;
-  float val_blue = color_ref_[kBlue].v;
-  float hue_yellow = color_ref_[kYellow].h;
-
-  // if (sat_white - 20 < hsv_.s && hsv_.s < sat_white + 20) {
-  //   color_ = kWhite;
-  // } else {
-  if (hue_black - 10 <= hsv_.h && hsv_.h <= hue_black + 10 && sat_black - 10 <= hsv_.s && hsv_.s <= sat_black + 10 && val_black - 10 <= hsv_.v  && hsv_.v <= val_black + 10) {
-    color_ = kBlack;
-  } else if (hue_green - 30 < hsv_.h && hsv_.h < hue_green + 70 && hsv_.v > val_black + 10){
-    color_ = kGreen;
-  } else if (hsv_.h < hue_red + 20 || 360 - 20 < hsv_.h) {
-    color_ = kRed;
-  } else if (hue_blue - 10 <= hsv_.h && hsv_.h <= hue_blue + 40 && sat_blue - 20 <= hsv_.s && hsv_.s <= sat_blue + 20 && val_blue - 15 <= hsv_.v  && hsv_.v <= val_blue) {
-    color_ = kBlue;
-  } 
-  // else if (hue_blue - 10 <= hsv_.h && hsv_.h <= hue_blue + 40 && sat_blue - 65 <= hsv_.s && hsv_.s <= sat_blue -40 && val_blue - 15 <= hsv_.v  && hsv_.v <= val_blue) {
-  // color_ = kBlue;
-  // } 
-  else if (hue_yellow - 30 < hsv_.h && hsv_.h < hue_yellow + 30) {
-    color_ = kYellow;
-  } else {
-    color_ = kInvalidColor;
-  }
 }
 
 Localize::Localize(MotorIo* motor_io)
@@ -133,7 +96,7 @@ void Localize::Update() {
 
   double micro_theta = (Lr - Ll) / D;
   theta_wa += micro_theta;
-  theta = counts_r_;
+  theta = theta_wa;
   double A = (Lr + Ll) / 2 * (1 - 0);
   double dx = A * cos(theta_wa + micro_theta / 2);
   double dy = A * sin(theta_wa + micro_theta / 2);
@@ -143,7 +106,19 @@ void Localize::Update() {
   y += dy;
   distance_ += dd;
 
-  // char str[264];
-  // sprintf(str, "x: %f y: %f distance: %f\n", x, y, distance_);
-  // syslog(LOG_NOTICE, str);
+  char str[264];
+  sprintf(str, "x: %f y: %f distance: %f\n", x, y, distance_);
+  syslog(LOG_NOTICE, str);
+}
+
+void Localize::SaveOdometri() {
+  char str [256];
+  FILE* fp = fopen("Odome.csv", "w");
+
+  for (int i=0; i<curr_index; i++) {
+    sprintf(str, "%d, %d\n", counts_ls[i], counts_rs[i]);
+    fprintf(fp, str);
+  }
+
+  fclose(fp);
 }

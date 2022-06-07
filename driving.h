@@ -41,7 +41,7 @@ class LineTracer {
   Luminous* luminous_;
   Move move_type_;
   int8_t base_power_;
-  const int8_t line_trace_threshold = 50;
+  const int8_t line_trace_threshold = 40;
   PidControl* pid_control_;
 };
 
