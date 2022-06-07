@@ -4,6 +4,7 @@
 #include "info_type.h"
 #include "etrc_info.h"
 #include "utils.h"
+#include "device_io.h"
 
 class WheelsControl {
  public:
