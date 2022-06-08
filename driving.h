@@ -4,7 +4,6 @@
 #include "info_type.h"
 #include "etrc_info.h"
 #include "utils.h"
-#include "ev3api.h"
 
 class WheelsControl {
  public:
